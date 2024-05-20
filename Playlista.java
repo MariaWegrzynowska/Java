@@ -2,28 +2,28 @@ import java.util.Arrays;
 
 public class Playlista {
 	String nazwa;
-	String[] lista_utworow;
+	Utwor[] lista_utworow;
 	int ile_utworow;
 	
 	public Playlista(String n) {
 		nazwa = n;
-		lista_utworow = new String[10];
+		lista_utworow = new Utwor[10];
 		ile_utworow = 0;
 		}
 	
-	public void dodajUtwor(String nazwa_utworu) {
-		if (nazwa_utworu == null || nazwa_utworu.trim().isEmpty()) {
-			System.err.println(nazwa + ": Nie można dołąćzyć do Playlisty");
+	public void dodajUtwor(Utwor u) {
+		if (u == null ) {
+			System.err.println(nazwa + ": Nie można dodac nieistniejącego utworu");
 		   return;
 		}
 		if (ile_utworow >= lista_utworow.length) {
 			System.err.println(nazwa + " niemożna dodać więcej utworów");
 			return;
 		}
-		lista_utworow[ile_utworow++] = nazwa_utworu;
+		lista_utworow[ile_utworow++] = u;
 	}
 		
-		public String pobierzUtwor(int indeks_utworu) {
+		public Utwor pobierzUtwor(int indeks_utworu) {
 			if (indeks_utworu < 0 || indeks_utworu > ile_utworow ) {
 				System.err.println(nazwa + ": Nie ma takiego utworu");
 				return null;
@@ -38,16 +38,16 @@ public class Playlista {
 			}
 			System.out.println(nazwa + "-lista utworów: ");
 			for (int i = 0; i < ile_utworow; i++) {
-				System.out.println(i+1 + ". " + lista_utworow[i]);
+				System.out.println(i+1 + ". " + lista_utworow[i].toString());
 			}
 		}
 		
-		public String usunUtwor(int indeks_utworu) {
+		public Utwor usunUtwor(int indeks_utworu) {
 			if (indeks_utworu < 0 || indeks_utworu > ile_utworow) {
 			System.err.println(nazwa + ": Nie ma takiego utworu na liscie");
 			return null;
 		}
-		String utwor = lista_utworow[indeks_utworu -1];
+		Utwor utwor = lista_utworow[indeks_utworu -1];
 		lista_utworow[indeks_utworu -1] = null;
 		ile_utworow--;
 		
@@ -64,7 +64,3 @@ public class Playlista {
 		
 		
 	}
-	
-	
-
-
