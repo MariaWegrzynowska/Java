@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Playlista {
 	String nazwa;
@@ -59,6 +60,7 @@ public class Playlista {
 		
 		public void posortujUtwory() {
 			Arrays.sort(lista_utworow, 0, ile_utworow);
+			//ollections.sort(lista_utworow);
 		}
 		
 		
