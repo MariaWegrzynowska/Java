@@ -1,140 +1,222 @@
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Odtwarzacz {
+    private Map<String, Playlista> playlisty;
 
-	private Playlista p1;  //refractor --> rename --> i zmieniamy nazwe
-	private Playlista p2;
-	private Scanner sc;
-	
-	public Odtwarzacz() {
-		p1  = new Playlista("Rock");
-		p2  = new Playlista("Pop");
-		
-		sc = new Scanner(System.in);
-		init();
-		
-	}
-	
-	private void init() {
-		p1.dodajUtwor(new Utwor("Smoke on the Water", "Deep Purple", 1972));
-		p1.dodajUtwor(new Utwor("Child in Time", "Deep Purple", 1970));
-		p1.dodajUtwor(new Utwor("Fortunate Son", "CCR", 1969));
-		p1.dodajUtwor(new Utwor("Have You Ever Seen The Rain?", "CCR", 1970));
-		p1.dodajUtwor(new Utwor("Fear of the Dark", "Iron Maiden", 1992));
-		p1.dodajUtwor(new Utwor("Aces High", "Iron Maiden", 1984));
-		p1.dodajUtwor(new Utwor("The Trooper", "Iron Maiden", 1983));
-		
-		p2.dodajUtwor(new Utwor("Tylko z Tobą Chcę Być Sobą", "Łukasz Zagrobelny", 2014));
-		p2.dodajUtwor(new Utwor("Love Me Like You Do", "Ellie Goulding", 2014));
-		p2.dodajUtwor(new Utwor("Jutro", "LemON", 2014));
-		p2.dodajUtwor(new Utwor("Cool Kids", "Echosmith", 2013));
-		p2.dodajUtwor(new Utwor("Perdoname (feat. Adrian Delgado & DyCy)", "Deorro", 2014));
-		p2.dodajUtwor(new Utwor("What are you waiting for", "Nickelback", 2014));
-		p2.dodajUtwor(new Utwor("Lips Are Movin'", "Meghan Trainor", 2015));
-		p2.dodajUtwor(new Utwor("Kalejdoskop szczęścia", "Andrzej Piaseczny", 2015));
-	}
-	
-	public void wlacz() {
-		Playlista p;
-		
-		while (true) {
-			System.out.println("Co chcesz zrobić? Wybierz opcję: ");
-			System.out.println("\t1:  wyświetlić playliste ");
-			System.out.println("\t2:  dodać nowy utwór ");
-			System.out.println("\t3:  przenieśc utwór ");
-			System.out.println("\t4:  skopiować utwór ");
-			System.out.println("\t5:  skasować utwór ");
-			System.out.println("\t9:  wyłączyć odtwarzacz ");
-			System.out.println("? ");
-			
-			byte o = sc.nextByte();
-			sc.nextLine();
-			
-			switch(o) {
-				case 1: 
-					p = wybierzPlayliste(); 
-					if (p != null) {
-						p.wyswietlUtwory(); 
-						}
-						break;
-					
-				case 2:
-					p = wybierzPlayliste(); 
-					if (p!= null) {
-						System.out.println("Podaj tytuł utworu: ");
-						String tytul = sc.nextLine();
-						System.out.println("Podaj wykonawce: ");
-						String wykonawca = sc.nextLine();
-						System.out.println("Rok: ");
-						int rokWydania = sc.nextInt();
-						
-						p.dodajUtwor(new Utwor(tytul, wykonawca, rokWydania));
-						p.wyswietlUtwory();
-					}
-					break;
-					
-				case 3:
-					p = wybierzPlayliste(); 
-					if (p!= null) {
-						p.wyswietlUtwory();
-						System.out.println("Który utwór: ");
-						byte numerUtworu = sc.nextByte();
-						
-						Utwor u = p.usunUtwor(numerUtworu);
-						if (u != null) {
-							Playlista p_do = p.equals(p1)? p2 : p1;
-							p_do.dodajUtwor(u);
-						}
-					}
-					break;
-					
-				case 4:
-					p = wybierzPlayliste(); 
-					if (p!= null) {
-						p.wyswietlUtwory();
-						System.out.println("Który utwór: ");
-						byte numerUtworu = sc.nextByte();
-						
-						Utwor u = p.pobierzUtwor(numerUtworu);
-						if (u != null) {
-							Playlista p_do = p.equals(p1)? p1 : p2;
-							p_do.dodajUtwor(u);
-						}
-					}
-					
-					case 5:
-						p = wybierzPlayliste(); 
-						if (p!= null) {
-							p.wyswietlUtwory();
-							System.out.println("Który utwór ma zostać skasowany: ");
-							byte numerUtworu = sc.nextByte();
-							
-							Utwor u = p.usunUtwor(numerUtworu);
-						}
-						break;
-						
-					case 9: 
-						return;
-					default:
-						System.err.println("Nie rozpoznaje opcji");
-			
-		}
-			
-		}
-		
-		private Playlista wybierzPlayliste() {
-			Playlista p = null;
-			System.out.println("Której playlisty urzyć? ");
-			
-		}
-					
-		
-	}
-	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+    public Odtwarzacz() {
+        playlisty = new HashMap<>();
+        Playlista rock = new Playlista("Rock");
+        rock.dodajUtwor(new Utwor("Smok", "Band1", 2000));
+        rock.dodajUtwor(new Utwor("Dragon", "Band2", 2001));
+        rock.dodajUtwor(new Utwor("Wiezienie", "Band3", 2001));
+        rock.dodajUtwor(new Utwor("Tatuaż", "Band4", 2001));
+        rock.dodajUtwor(new Utwor("Ojciec", "Band5", 2001));
 
-	}
-	
+        Playlista pop = new Playlista("Pop");
+        pop.dodajUtwor(new Utwor("Justice beaver", "Artist1", 2010));
+        pop.dodajUtwor(new Utwor("Cool kids", "Artist2", 2011));
+        pop.dodajUtwor(new Utwor("Not cool kids", "Artist3", 2011));
+        pop.dodajUtwor(new Utwor("Tall kids", "Artist4", 2011));
+        pop.dodajUtwor(new Utwor("Kids", "Artist5", 2011));
 
+        playlisty.put(rock.nazwa, rock);
+        playlisty.put(pop.nazwa, pop);
+    }
+
+    public void wlacz() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Menu:");
+            System.out.println("1. Wyświetl playlisty");
+            System.out.println("2. Dodaj nową playlistę");
+            System.out.println("3. Wyświetl zawartość playlisty");
+            System.out.println("4. Posortuj utwory w playliście");
+            System.out.println("5. Usuń playlistę");
+            System.out.println("6. Dodaj utwór do playlisty");
+            System.out.println("7. Przenieś utwór między playlistami");
+            System.out.println("8. Skopiuj utwór między playlistami");
+            System.out.println("9. Skasuj utwór z playlisty");
+            System.out.println("10. Zakończ");
+
+            int wybor = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (wybor) {
+                case 1:
+                    wyswietlPlaylisty();
+                    break;
+                case 2:
+                    dodajPlayliste(scanner);
+                    break;
+                case 3:
+                    wyswietlZawartoscPlaylisty(scanner);
+                    break;
+                case 4:
+                    posortujPlayliste(scanner);
+                    break;
+                case 5:
+                    usunPlayliste(scanner);
+                    break;
+                case 6:
+                    dodajUtworDoPlaylisty(scanner);
+                    break;
+                case 7:
+                    przeniesUtworMiedzyPlaylistami(scanner);
+                    break;
+                case 8:
+                    skopiujUtworMiedzyPlaylistami(scanner);
+                    break;
+                case 9:
+                    skasujUtworZPlaylisty(scanner);
+                    break;
+                case 10:
+                    System.out.println("Koniec programu.");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Nieprawidłowa opcja.");
+            }
+        }
+    }
+
+    private void wyswietlPlaylisty() {
+        System.out.println("Playlisty:");
+        for (String nazwa : playlisty.keySet()) {
+            System.out.println("- " + nazwa);
+        }
+    }
+
+    private void dodajPlayliste(Scanner scanner) {
+        System.out.print("Podaj nazwę nowej playlisty: ");
+        String nazwa = scanner.nextLine();
+        playlisty.put(nazwa, new Playlista(nazwa));
+        System.out.println("Playlista " + nazwa + " dodana.");
+    }
+
+    private void wyswietlZawartoscPlaylisty(Scanner scanner) {
+        System.out.print("Podaj nazwę playlisty: ");
+        String nazwa = scanner.nextLine();
+        Playlista playlista = playlisty.get(nazwa);
+        if (playlista != null) {
+            playlista.wyswietlUtwory();
+        } else {
+            System.out.println("Brak playlisty o nazwie " + nazwa);
+        }
+    }
+
+    private void posortujPlayliste(Scanner scanner) {
+        System.out.print("Podaj nazwę playlisty: ");
+        String nazwa = scanner.nextLine();
+        Playlista playlista = playlisty.get(nazwa);
+        if (playlista != null) {
+            playlista.posortujUtwory();
+            System.out.println("Playlista " + nazwa + " została posortowana.");
+        } else {
+            System.out.println("Brak playlisty o nazwie " + nazwa);
+        }
+    }
+
+    private void usunPlayliste(Scanner scanner) {
+        System.out.print("Podaj nazwę playlisty do usunięcia: ");
+        String nazwa = scanner.nextLine();
+        if (playlisty.remove(nazwa) != null) {
+            System.out.println("Playlista " + nazwa + " została usunięta.");
+        } else {
+            System.out.println("Brak playlisty o nazwie " + nazwa);
+        }
+    }
+
+    private void dodajUtworDoPlaylisty(Scanner scanner) {
+        System.out.print("Podaj nazwę playlisty: ");
+        String nazwa = scanner.nextLine();
+        Playlista playlista = playlisty.get(nazwa);
+        if (playlista != null) {
+            System.out.print("Podaj tytuł utworu: ");
+            String tytul = scanner.nextLine();
+            System.out.print("Podaj wykonawcę: ");
+            String wykonawca = scanner.nextLine();
+            System.out.print("Podaj rok wydania: ");
+            int rokWydania = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            playlista.dodajUtwor(new Utwor(tytul, wykonawca, rokWydania));
+            System.out.println("Utwór został dodany do playlisty " + nazwa);
+        } else {
+            System.out.println("Brak playlisty o nazwie " + nazwa);
+        }
+    }
+
+    private void przeniesUtworMiedzyPlaylistami(Scanner scanner) {
+        System.out.print("Podaj nazwę playlisty źródłowej: ");
+        String nazwaZrodlo = scanner.nextLine();
+        Playlista playlistaZrodlo = playlisty.get(nazwaZrodlo);
+        if (playlistaZrodlo != null) {
+            System.out.print("Podaj indeks utworu do przeniesienia: ");
+            int indeks = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            Utwor utwor = playlistaZrodlo.usunUtwor(indeks);
+            if (utwor != null) {
+                System.out.print("Podaj nazwę playlisty docelowej: ");
+                String nazwaCel = scanner.nextLine();
+                Playlista playlistaCel = playlisty.get(nazwaCel);
+                if (playlistaCel != null) {
+                    playlistaCel.dodajUtwor(utwor);
+                    System.out.println("Utwór został przeniesiony z " + nazwaZrodlo + " do " + nazwaCel);
+                } else {
+                    System.out.println("Brak playlisty o nazwie " + nazwaCel);
+                }
+            }
+        } else {
+            System.out.println("Brak playlisty o nazwie " + nazwaZrodlo);
+        }
+    }
+
+    private void skopiujUtworMiedzyPlaylistami(Scanner scanner) {
+        System.out.print("Podaj nazwę playlisty źródłowej: ");
+        String nazwaZrodlo = scanner.nextLine();
+        Playlista playlistaZrodlo = playlisty.get(nazwaZrodlo);
+        if (playlistaZrodlo != null) {
+            System.out.print("Podaj indeks utworu do skopiowania: ");
+            int indeks = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            Utwor utwor = playlistaZrodlo.pobierzUtwor(indeks);
+            if (utwor != null) {
+                System.out.print("Podaj nazwę playlisty docelowej: ");
+                String nazwaCel = scanner.nextLine();
+                Playlista playlistaCel = playlisty.get(nazwaCel);
+                if (playlistaCel != null) {
+                    playlistaCel.dodajUtwor(new Utwor(utwor.getTytul(), utwor.getWykonawca(), utwor.getRokWydania()));
+                    System.out.println("Utwór został skopiowany z " + nazwaZrodlo + " do " + nazwaCel);
+                } else {
+                    System.out.println("Brak playlisty o nazwie " + nazwaCel);
+                }
+            }
+        } else {
+            System.out.println("Brak playlisty o nazwie " + nazwaZrodlo);
+        }
+    }
+
+    private void skasujUtworZPlaylisty(Scanner scanner) {
+        System.out.print("Podaj nazwę playlisty: ");
+        String nazwa = scanner.nextLine();
+        Playlista playlista = playlisty.get(nazwa);
+        if (playlista != null) {
+            System.out.print("Podaj indeks utworu do skasowania: ");
+            int indeks = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            if (playlista.usunUtwor(indeks) != null) {
+                System.out.println("Utwór został skasowany z playlisty " + nazwa);
+            } else {
+                System.out.println("Brak utworu o podanym indeksie.");
+            }
+        } else {
+            System.out.println("Brak playlisty o nazwie " + nazwa);
+        }
+    }
+
+    public static void main(String[] args) {
+        Odtwarzacz odtwarzacz = new Odtwarzacz();
+        odtwarzacz.wlacz();
+    }
 }
