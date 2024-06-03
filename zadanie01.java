@@ -1,60 +1,38 @@
-
 import java.util.Scanner;
 
 public class zadanie01 {
-	
-	//zadanie 1
-	private static int[] utworzTablice(int n, Scanner sc) {
-		int[] lista = new int[n];
-		System.out.println("Podaj liczby: ");
-	
-		for (int i = 0; i < n; i++) {
-			int b = sc.nextInt();
-			lista[i] = b;
-		} 
-		
-		for (int j = 0; j<n; j++) {
-			System.out.println(lista[j]);
-		}
-		
-		return lista;
-	}
-	
-	// Zadanie 2
-	private static int suma(int[] lista) {
-		int n = lista.length;
-		int suma = 0;
+
+		public static void main(String[] args) {
+			Scanner scanner = new Scanner(System.in);
 			
-		for (int j = 0; j<n; j++) {
-			suma += lista[j];
+			System.out.println("Witaj w kalkulatorze BMI");
+			
+			System.out.println("Podaj mase ciała (w kg):");
+			float waga = scanner.nextFloat();
+			
+			System.out.println("Podaj wzrost (w m):");
+			float wzrost = scanner.nextFloat();
+			
+			float BMI = BMI(waga, wzrost);
+			
+			System.out.println("Twoje BMI: " + Interpretacja(BMI));
+			
+			scanner.close();
 		}
 		
-		return suma;
-	}
-	
-	private static void liczbaPar (int[] lista, int k) {
-		int n=0;
-		for (int i=0; i<lista.length; i++) {
-			for (int j=j+1, j<lista.legth; j++) {
-			if ((lista[i]+lista[j])%k==0); {
-				n++;
+		public static float BMI(float waga, float wzrost) {
+			return waga/(wzrost*wzrost);
+		}
+		
+		public static String Interpretacja(float BMI) {
+			if (BMI < 18.5) {
+				return "nieodwaga";
+			} else if (BMI <25) {
+				return "w normie";
+			} else if (BMI < 30) {
+				return "nadwaga";
+			} else {
+				return "otyłość";
 			}
 		}
-	
-
-	return n;
-	}
-	
-	//zadanie 1
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Ile elementów ma mieć twoja lista");
-		int n = sc.nextInt();
-		
-		int[] lista = utworzTablice(n, sc);	
-		
-		int wynik = suma(lista);
-		System.out.println(wynik);
-				
-	}
 }
